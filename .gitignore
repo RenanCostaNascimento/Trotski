@@ -1,0 +1,7 @@
+# Maven build
+target/
+
+# Ignore Eclipse project
+.classpath
+.project
+.settings/

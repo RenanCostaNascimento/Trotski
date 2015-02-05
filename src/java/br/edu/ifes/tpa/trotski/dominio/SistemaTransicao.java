@@ -5,21 +5,21 @@ public class SistemaTransicao {
 	private int quantidadeAcoes;
 	private boolean[][] matrizAtivacao;
 	private boolean[][] matrizDesativacao;
-	private boolean[][] matrizTransicao;
+	private MatrizTransicao matrizTransicao;
 	
 	
 	
-	public SistemaTransicao(int quantidadeAcoes, boolean [][] matrizAtivacao, boolean [][] matrizDesativacao){
+	public SistemaTransicao(boolean [][] matrizAtivacao){
 		this.quantidadeAcoes = quantidadeAcoes;
 		this.matrizAtivacao = matrizAtivacao;
 		this.matrizDesativacao = matrizDesativacao;
-		gerarMatrizTransicao();
+		matrizTransicao = new MatrizTransicao(matrizAtivacao);
+	}
+	
+	@Override
+	public String toString(){
+		return matrizTransicao.toString();
 	}
 
-
-
-	private void gerarMatrizTransicao() {
-		// TODO Auto-generated method stub
-	}
 	
 }

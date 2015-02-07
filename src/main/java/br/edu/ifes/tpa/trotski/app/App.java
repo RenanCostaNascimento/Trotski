@@ -18,13 +18,18 @@ public class App {
 				matrizDesativacao);
 
 		// Informações sobre o Sistema de Transição.
-		System.out.println(sistema.verificarIrreflexividade());
 
 		// TODO Indicar se as seguintes propriedades são válidas ou não para a
 		// relação de transição: reflexiva; írreflexiva; simétrica;
 		// anti-simétrica; assimétrica; e transitiva.
 		// Se não for, você deve apresentar todos os pares ordenados de estados
 		// presentes ou ausentes que não satisfazem a propriedade.
+		System.out.println("Transições reflexivas:");
+		System.out.println(sistema.verificarReflexividade());
+		System.out.println("Transições não reflexivas:");
+		System.out.println(sistema.verificarIrreflexividade());
+		System.out.println("Transições simétricas:");
+		System.out.println(sistema.verificarSimetria());
 
 		// TODO Dizer se a relação é de equivalência ou ordem parcial.
 

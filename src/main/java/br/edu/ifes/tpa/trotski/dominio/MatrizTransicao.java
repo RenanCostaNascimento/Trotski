@@ -2,6 +2,7 @@ package br.edu.ifes.tpa.trotski.dominio;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ public class MatrizTransicao {
 
 	private boolean[][] matrizRepresentativa;
 	private Set<Estado> estados;
+	private Set<Estado[]> transicoes;
 	private Queue<Estado> filaEstados;
 
 	public MatrizTransicao(boolean[][] matrizAtivacao,
@@ -22,6 +24,9 @@ public class MatrizTransicao {
 		filaEstados.add(estadoInicial);
 		ativarPossiveisEstados(matrizAtivacao, matrizDesativacao);
 
+		// Forma as transições. Só deve ser invocado depois que o todos os
+		// estados já foram gerados.
+		this.transicoes = obterTransicoes();
 	}
 
 	/**
@@ -119,9 +124,8 @@ public class MatrizTransicao {
 
 	/**
 	 * Verifica todas as relações da matriz de transição, retornando todos os
-	 * estados que obedecem a propriedade de irreflexividade, à saber: R
-	 * é irreflexiva, se e somente se, para todo x em A, (x, x) não pertence à
-	 * R.
+	 * estados que obedecem a propriedade de irreflexividade, à saber: R é
+	 * irreflexiva, se e somente se, para todo x em A, (x, x) não pertence à R.
 	 * 
 	 * @return os estados que possuem relação de reflexividade.
 	 */
@@ -155,6 +159,53 @@ public class MatrizTransicao {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Verifica quais transições são simétricas.
+	 *
+	 * @return as transições que são simétricas.
+	 */
+	public String verificarSimetria() {
+		List<Estado[]> transicoesSimetricas = new LinkedList<Estado[]>();
+
+		// Encontra as transições simétricas.
+		for (Estado[] transicao : transicoes) {
+			for (Estado[] outraTransicao : transicoes) {
+				if (transicao[0] == outraTransicao[1]
+						&& transicao[1] == outraTransicao[0])
+					transicoesSimetricas.add(transicao);
+			}
+		}
+
+		// Forma a string
+		StringBuilder builder = new StringBuilder();
+		for (Estado[] transicao : transicoesSimetricas) {
+			builder.append(transicao[0].nomeRepresentativoEstado() + "-->"
+					+ transicao[1].nomeRepresentativoEstado() + "\n");
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Gera uma conjunto de transições. Onde cada transição é um vetor com
+	 * apenas dois estados, e indica que há uma transição do primeiro estado
+	 * para o segundo.
+	 *
+	 * @return conjunto de transições.
+	 */
+	private Set<Estado[]> obterTransicoes() {
+		Set<Estado[]> transicoes = new HashSet<Estado[]>();
+
+		for (Estado estado : estados) {
+			for (Estado proximo : estado.getProximosEstados()) {
+				Estado transicao[] = { estado, proximo };
+				transicoes.add(transicao);
+			}
+		}
+
+		return transicoes;
 	}
 
 	@Override

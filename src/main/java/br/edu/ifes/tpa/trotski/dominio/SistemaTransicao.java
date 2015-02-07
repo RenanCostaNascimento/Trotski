@@ -27,15 +27,17 @@ public class SistemaTransicao {
 
 	/**
 	 * Verifica todas as relações da matriz de transição, retornando todos os
-	 * estados que obedecem a propriedade de irreflexividade, à saber: R
-	 * é irreflexiva, se e somente se, para todo x em A, (x, x) não pertence à
-	 * R.
+	 * estados que obedecem a propriedade de irreflexividade, à saber: R é
+	 * irreflexiva, se e somente se, para todo x em A, (x, x) não pertence à R.
 	 * 
 	 * @return os estados que possuem relação de reflexividade.
 	 */
 	public String verificarIrreflexividade() {
-
 		return matrizTransicao.verificarIrreflexividade();
+	}
+
+	public String verificarSimetria() {
+		return matrizTransicao.verificarSimetria();
 	}
 
 	@Override

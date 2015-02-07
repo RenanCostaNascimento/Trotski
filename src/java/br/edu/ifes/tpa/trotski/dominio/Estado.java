@@ -5,8 +5,6 @@ import java.util.Set;
 
 public class Estado {
 
-	private static int id = 0;
-	private String nome;
 	private boolean[] configuracao;
 	private Set<Estado> proximosEstados;
 
@@ -16,22 +14,6 @@ public class Estado {
 		for (int i = 0; i < configuracao.length; i++) {
 			configuracao[i] = false;
 		}
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public Set<Estado> getProximosEstados() {
@@ -54,39 +36,83 @@ public class Estado {
 		this.configuracao = configuracao;
 	}
 
-	public void ativarConfiguracao(int posicao) {
-		this.configuracao[posicao] = true;
+	public void mudarConfiguracao(int posicao, boolean novoValor) {
+		this.configuracao[posicao] = novoValor;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		
-		for(Estado estado : proximosEstados){
+
+		for (Estado estado : proximosEstados) {
 			builder.append(nomeRepresentativoEstado(this) + " -> ");
 			builder.append(nomeRepresentativoEstado(estado) + ", \n");
 		}
-		
+
 		return builder.toString();
 	}
-	
-	private String nomeRepresentativoEstado(Estado estado){
+
+	/**
+	 * Cria um nome representativo para o estado utilizando sua configuração.
+	 * 
+	 * @param estado
+	 *            o estado que se deseja criar o nome.
+	 * @return o nome representativo.
+	 */
+	private String nomeRepresentativoEstado(Estado estado) {
 		String nome = "";
 		for (int i = 0; i < configuracao.length; i++) {
 			if (estado.configuracao[i]) {
 				nome += "t";
-			}else{
+			} else {
 				nome += "f";
 			}
 		}
 		return nome;
 	}
 
+	/**
+	 * Copia a configuração de um estado para o outro.
+	 * 
+	 * @param estado
+	 *            o estado que se deseja copiar a configuração.
+	 */
 	public void copiarConfiguracao(Estado estado) {
 		for (int i = 0; i < estado.configuracao.length; i++) {
 			this.configuracao[i] = estado.configuracao[i];
 		}
-		
+
+	}
+
+	/**
+	 * Verifica se um estado já existe em um conjunto de estados. A verificação
+	 * é realizada através da configuração dos estados.
+	 * 
+	 * @param conjuntoEstado
+	 *            o conjunto de estados de onde se quer verificar a existência
+	 *            de novoEstado.
+	 * @param novoEstado
+	 *            o novo estado que se deseja verificar a existência.
+	 * @return true se o estado já existe no conjunto passado como parâmetro.
+	 */
+	public static boolean estadoExiste(Set<Estado> conjuntoEstado,
+			Estado novoEstado) {
+
+		int deveExistir;
+		for (Estado estado : conjuntoEstado) {
+			deveExistir = 0;
+			for (int i = 0; i < novoEstado.getConfiguracao().length; i++) {
+				if (estado.getConfiguracao()[i] != novoEstado.getConfiguracao()[i]) {
+					break;
+				}
+				deveExistir++;
+			}
+			if (deveExistir == novoEstado.getConfiguracao().length) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

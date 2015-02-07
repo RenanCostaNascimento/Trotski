@@ -11,29 +11,16 @@ public class MatrizTransicao {
 	private Set<Estado> estados;
 	private Queue<Estado> filaEstados;
 
-	public MatrizTransicao(boolean[][] matrizAtivacao) {
-		
+	public MatrizTransicao(boolean[][] matrizAtivacao,
+			boolean[][] matrizDesativacao) {
+
 		estados = new HashSet<Estado>();
-		filaEstados = new  LinkedList<Estado>();
+		filaEstados = new LinkedList<Estado>();
 
 		Estado estadoInicial = new Estado(matrizAtivacao.length);
 		estados.add(estadoInicial);
 		filaEstados.add(estadoInicial);
-		ativarPossiveisEstados(matrizAtivacao);
-
-//		desativarPossiveisEstados(matrizDesativacao);
-
-	}
-
-	/**
-	 * Ativa a matriz de desativação, de modo que novos estados sejam gerados ou
-	 * arestas criadas, se possível.
-	 * 
-	 * @param matrizDesativacao
-	 *            a matriz de desativação que se deseja ativar;
-	 */
-	private void desativarPossiveisEstados(boolean[][] matrizDesativacao) {
-		// TODO Auto-generated method stub
+		ativarPossiveisEstados(matrizAtivacao, matrizDesativacao);
 
 	}
 
@@ -44,86 +31,81 @@ public class MatrizTransicao {
 	 * @param matrizAtivacao
 	 *            a matriz de ativação que se deseja ativar.
 	 */
-	private void ativarPossiveisEstados(boolean[][] matrizAtivacao) {
-		while(!filaEstados.isEmpty()) {
+	private void ativarPossiveisEstados(boolean[][] matrizAtivacao,
+			boolean[][] matrizDesativacao) {
+		while (!filaEstados.isEmpty()) {
 			Estado estado = filaEstados.remove();
 			for (int i = 0; i < matrizAtivacao.length; i++) {
 				boolean[] condicaoAtivacao = new boolean[matrizAtivacao.length];
+				boolean[] condicaoDesativacao = new boolean[matrizDesativacao.length];
 				for (int j = 0; j < matrizAtivacao.length; j++) {
 					condicaoAtivacao[j] = matrizAtivacao[i][j];
+					condicaoDesativacao[j] = matrizDesativacao[i][j];
 				}
-				ativarEstado(estado, condicaoAtivacao, i);
+				// tenta ativar o estado i
+				ativarDesativarEstado(estado, condicaoAtivacao, i, true);
+				// tenta desativar o estado i
+				ativarDesativarEstado(estado, condicaoDesativacao, i, false);
 			}
 		}
 	}
 
 	/**
-	 * Ativa um estado, se possível, gerando um novo estado ou uma nova aresta.
+	 * Ativa ou desativa um estado, se possível, gerando um novo estado ou uma
+	 * nova aresta.
 	 * 
 	 * @param estado
-	 *            o estado que se deseja ativar.
-	 * @param condicaoAtivacao
-	 *            a condição de ativação para o estado.
+	 *            o estado que se deseja ativar ou desativar.
+	 * @param condicaoAtivacaoDesativacao
+	 *            a condição de ativação ou desativação para o estado.
 	 * @param posicaoConfiguracao
-	 *            a posição de configuração do estado que será ativado caso a
-	 *            condição seja verdadeira.
+	 *            a posição de configuração do estado que será ativado ou
+	 *            desativado caso a condição seja verdadeira.
+	 * @param ativacao
+	 *            determina se o estado passado como parâmetro deve ativar ou
+	 *            desativar.
 	 */
-	private void ativarEstado(Estado estado, boolean[] condicaoAtivacao,
-			int posicaoConfiguracao) {
-		boolean estadoDeveAtivar = true;
-		for (int i = 0; i < condicaoAtivacao.length; i++) {
-			if (condicaoAtivacao[i]
-					&& condicaoAtivacao[i] != estado.getConfiguracao()[i]) {
-				estadoDeveAtivar = false;
+	private void ativarDesativarEstado(Estado estado,
+			boolean[] condicaoAtivacaoDesativacao, int posicaoConfiguracao,
+			boolean ativacao) {
+		boolean estadoDeveAtivarDesativar = true;
+		for (int i = 0; i < condicaoAtivacaoDesativacao.length; i++) {
+			if (condicaoAtivacaoDesativacao[i]
+					&& condicaoAtivacaoDesativacao[i] != estado
+							.getConfiguracao()[i]) {
+				estadoDeveAtivarDesativar = false;
 				break;
 			}
 		}
-		if (estadoDeveAtivar) {
-			Estado novoEstado = new Estado(condicaoAtivacao.length);
+		if (estadoDeveAtivarDesativar) {
+			Estado novoEstado = new Estado(condicaoAtivacaoDesativacao.length);
 			novoEstado.copiarConfiguracao(estado);
-			novoEstado.ativarConfiguracao(posicaoConfiguracao);
-			if (!estadoExiste(novoEstado)) {
+			novoEstado.mudarConfiguracao(posicaoConfiguracao, ativacao);
+			// verifica se o estado existe no grafo
+			if (!Estado.estadoExiste(estados, novoEstado)) {
+				// cria uma nova aresta para o novo estado e o adiciona no grafo
 				estado.addProximoEstado(novoEstado);
 				estados.add(novoEstado);
 				filaEstados.add(novoEstado);
-			}
-		}
-
-	}
-
-	/**
-	 * Verifica se um estado já existe.
-	 * 
-	 * @param novoEstado
-	 *            o estado que se deseja verificar a existência.
-	 * @return true se o estado já existir.
-	 */
-	private boolean estadoExiste(Estado novoEstado) {
-
-		int deveExistir;
-		for (Estado estado : estados) {
-			deveExistir = 0;
-			for (int i = 0; i < novoEstado.getConfiguracao().length; i++) {
-				if (estado.getConfiguracao()[i] != novoEstado.getConfiguracao()[i]) {
-					break;
+			} else {
+				// verifica se já existe uma aresta para o novo estado
+				if (!Estado.estadoExiste(estado.getProximosEstados(),
+						novoEstado)) {
+					// só cria uma nova aresta para o novo estado
+					estado.addProximoEstado(novoEstado);
 				}
-				deveExistir++;
-			}
-			if(deveExistir == novoEstado.getConfiguracao().length){
-				return true;
 			}
 		}
 
-		return false;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		for(Estado estado : estados){
+		for (Estado estado : estados) {
 			builder.append(estado.toString());
 		}
-		
+
 		return builder.toString();
 	}
 }

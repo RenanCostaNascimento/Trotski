@@ -11,8 +11,10 @@ public class App {
 
 		boolean[][] matrizAtivacao = { { false, false, false },
 				{ true, false, false }, { true, false, false } };
+		boolean[][] matrizDesativacao = { { true, true, false },
+				{ false, true, false }, { true, false, true} };
 
-		SistemaTransicao sistema = new SistemaTransicao(matrizAtivacao);
+		SistemaTransicao sistema = new SistemaTransicao(matrizAtivacao, matrizDesativacao);
 		System.out.println(sistema);
 
 	}

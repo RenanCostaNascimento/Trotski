@@ -2,18 +2,16 @@ package br.edu.ifes.tpa.trotski.dominio;
 
 public class SistemaTransicao {
 	
-	private int quantidadeAcoes;
 	private boolean[][] matrizAtivacao;
 	private boolean[][] matrizDesativacao;
 	private MatrizTransicao matrizTransicao;
 	
 	
 	
-	public SistemaTransicao(boolean [][] matrizAtivacao){
-		this.quantidadeAcoes = quantidadeAcoes;
+	public SistemaTransicao(boolean [][] matrizAtivacao, boolean [][] matrizDesativacao){
 		this.matrizAtivacao = matrizAtivacao;
 		this.matrizDesativacao = matrizDesativacao;
-		matrizTransicao = new MatrizTransicao(matrizAtivacao);
+		matrizTransicao = new MatrizTransicao(matrizAtivacao, matrizDesativacao);
 	}
 	
 	@Override

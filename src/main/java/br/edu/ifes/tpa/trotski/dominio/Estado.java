@@ -113,4 +113,31 @@ public class Estado {
 		return false;
 	}
 
+	/**
+	 * Verifica se a configuração de dois estados são iguais.
+	 * 
+	 * @param um
+	 *            Um estado
+	 * @param outro
+	 *            Outro estado
+	 * @return Se a configuração dos dois estados são iguais.
+	 */
+	public static boolean configuracoesIguais(Estado um, Estado outro) {
+		// Pega a configuração dos dois
+		boolean[] umconf = um.getConfiguracao();
+		boolean[] outroconf = outro.getConfiguracao();
+
+		// Verifica se tem tamanhos iguais
+		if (umconf.length != outroconf.length)
+			return false;
+
+		// Verifica se suas configurações tem valores iguais
+		for (int i = 0; i < umconf.length; i++) {
+			if (umconf[i] != outroconf[i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

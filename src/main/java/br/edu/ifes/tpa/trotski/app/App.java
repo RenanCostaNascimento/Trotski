@@ -1,22 +1,42 @@
 package br.edu.ifes.tpa.trotski.app;
 
-import javax.swing.JFrame;
-
-import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
-import br.edu.ifes.tpa.trotski.dominio.SistemaTransicao;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JFrame;
+
+import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
+import br.edu.ifes.tpa.trotski.dominio.SistemaTransicao;
+import br.edu.ifes.tpa.trotski.util.JSONConverter;
+
 public class App {
+
+	private static String arquivoEntrada = "/home/possatti/projects/Trotski/entradas/exemplo.json";
 
 	public static Scanner s = new Scanner(System.in);
 
 	/**
 	 * @param args
+	 * @throws IOException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+
+		// Pega o conteúdo JSON do arquivo de entrada.
+		List<String> lines = Files.readAllLines(Paths.get(arquivoEntrada),
+				StandardCharsets.UTF_8);
+		StringBuilder sb = new StringBuilder();
+		for (String line : lines) {
+			sb.append(line + "\n");
+		}
+		String json = sb.toString();
+		System.out.println(json);
+		JSONConverter.lerJSON(json);
 
 		boolean[][] matrizAtivacao = { { false, false, false },
 				{ true, false, false }, { true, false, false } };
@@ -144,9 +164,10 @@ public class App {
 				String algumEstado = s.next();
 				System.out.println("Entre com outro estado (ex: FFF):");
 				String maisUmEstado = s.next();
-				System.out
-						.println("Verificando se há caminho de " + algumEstado + " para " + maisUmEstado + ":");
-				System.out.println(sistema.verificarCaminho(algumEstado, maisUmEstado));
+				System.out.println("Verificando se há caminho de "
+						+ algumEstado + " para " + maisUmEstado + ":");
+				System.out.println(sistema.verificarCaminho(algumEstado,
+						maisUmEstado));
 				holdOn();
 				break;
 

@@ -40,6 +40,14 @@ public class SistemaTransicao {
 		return matrizTransicao.verificarSimetria();
 	}
 
+	public String verificarAntissimetria() {
+		return matrizTransicao.verificarAntissimetria();
+	}
+
+	public String verificarAssimetria() {
+		return matrizTransicao.verificarAssimetria();
+	}
+
 	@Override
 	public String toString() {
 		return matrizTransicao.toString();

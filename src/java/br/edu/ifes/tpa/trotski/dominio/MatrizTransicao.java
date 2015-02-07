@@ -96,7 +96,65 @@ public class MatrizTransicao {
 				}
 			}
 		}
+	}
 
+	/**
+	 * Verifica todas as relações da matriz de transição, retornando todos os
+	 * estados que obedecem a propriedade de reflexividade, à saber: R é
+	 * reflexiva, se e somente se, para todo x em A, (x, x) pertence à R.
+	 * 
+	 * @return os estados que possuem relação de reflexividade.
+	 */
+	public String verificarReflexividade() {
+		StringBuilder builder = new StringBuilder();
+
+		for (Estado estado : estados) {
+			if (verificarReflexividade(estado)) {
+				builder.append(estado.nomeRepresentativoEstado() + ",\n");
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Verifica todas as relações da matriz de transição, retornando todos os
+	 * estados que obedecem a propriedade de irreflexividade, à saber: R
+	 * é irreflexiva, se e somente se, para todo x em A, (x, x) não pertence à
+	 * R.
+	 * 
+	 * @return os estados que possuem relação de reflexividade.
+	 */
+	public String verificarIrreflexividade() {
+		StringBuilder builder = new StringBuilder();
+
+		for (Estado estado : estados) {
+			if (!verificarReflexividade(estado)) {
+				builder.append(estado.nomeRepresentativoEstado() + ",\n");
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Verifica se um estado obedece a propriedade de reflexividade.
+	 * 
+	 * @param estado
+	 *            o estado que se deseja verificar a propriedade.
+	 * @return true se o estado obedecer a propriedade.
+	 */
+	private boolean verificarReflexividade(Estado estado) {
+
+		String nomeEstado = estado.nomeRepresentativoEstado();
+		for (Estado proximoEstado : estado.getProximosEstados()) {
+			String nomeProximoEstado = proximoEstado.nomeRepresentativoEstado();
+			if (nomeEstado.equals(nomeProximoEstado)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

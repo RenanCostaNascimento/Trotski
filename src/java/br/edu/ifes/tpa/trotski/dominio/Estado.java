@@ -45,8 +45,8 @@ public class Estado {
 		StringBuilder builder = new StringBuilder();
 
 		for (Estado estado : proximosEstados) {
-			builder.append(nomeRepresentativoEstado(this) + " -> ");
-			builder.append(nomeRepresentativoEstado(estado) + ", \n");
+			builder.append(this.nomeRepresentativoEstado() + " -> ");
+			builder.append(estado.nomeRepresentativoEstado() + ", \n");
 		}
 
 		return builder.toString();
@@ -55,14 +55,12 @@ public class Estado {
 	/**
 	 * Cria um nome representativo para o estado utilizando sua configuração.
 	 * 
-	 * @param estado
-	 *            o estado que se deseja criar o nome.
 	 * @return o nome representativo.
 	 */
-	private String nomeRepresentativoEstado(Estado estado) {
+	public String nomeRepresentativoEstado() {
 		String nome = "";
 		for (int i = 0; i < configuracao.length; i++) {
-			if (estado.configuracao[i]) {
+			if (this.configuracao[i]) {
 				nome += "t";
 			} else {
 				nome += "f";

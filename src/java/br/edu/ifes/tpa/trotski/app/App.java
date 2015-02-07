@@ -15,7 +15,8 @@ public class App {
 				{ false, true, false }, { true, false, true} };
 
 		SistemaTransicao sistema = new SistemaTransicao(matrizAtivacao, matrizDesativacao);
-		System.out.println(sistema);
+		
+		System.out.println(sistema.verificarIrreflexividade());
 
 	}
 

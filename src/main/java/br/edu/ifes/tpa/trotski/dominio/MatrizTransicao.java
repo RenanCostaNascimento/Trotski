@@ -272,6 +272,14 @@ public class MatrizTransicao {
 		return transicoes;
 	}
 
+	public Set<Estado> getEstados() {
+		return estados;
+	}
+
+	public Set<Estado[]> getTransicoes() {
+		return transicoes;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

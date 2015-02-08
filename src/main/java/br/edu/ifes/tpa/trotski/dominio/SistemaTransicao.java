@@ -48,6 +48,16 @@ public class SistemaTransicao {
 		return matrizTransicao.verificarAssimetria();
 	}
 
+	/**
+	 * Retorna a matriz de transição gerada pelas matrizes de ativação e
+	 * desativação.
+	 * 
+	 * @return Matriz de transição.
+	 */
+	public MatrizTransicao getMatrizTransicao() {
+		return matrizTransicao;
+	}
+
 	@Override
 	public String toString() {
 		return matrizTransicao.toString();

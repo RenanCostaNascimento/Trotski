@@ -27,6 +27,14 @@ public class JGraphXLearning1 extends JFrame {
 		graph.getModel().endUpdate();
 		mxGraphComponent graphComponent = new mxGraphComponent(graph);
 		getContentPane().add(graphComponent);
+
+		// Destiva algumas propriedades da visualização
+		graph.setCellsEditable(false);   // Want to edit the value of a cell in the graph?
+//		graph.setCellsMovable(false);    // Moving cells in the graph. Note that an edge is also a cell.
+		graph.setCellsResizable(false);  // Inhibit cell re-sizing.
+//		graph.setCellsSelectable(false); // Now I can't even select the cells!!!
+//		graph.setEnabled(false); // Catch-All: no interaction with the graph.
+		graphComponent.setConnectable(false); // Inhibit edge creation in the graph.
 	}
 
 	public static void main(String args[]) {

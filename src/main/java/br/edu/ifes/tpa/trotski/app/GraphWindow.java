@@ -10,12 +10,12 @@ import com.mxgraph.view.mxGraph;
  * 
  * @author vainolo
  */
-public class JGraphXLearning1 extends JFrame {
+public class GraphWindow extends JFrame {
 
 	private static final long serialVersionUID = 196831535599934813L;
 
-	public JGraphXLearning1() {
-		super("JGraphXLearning1");
+	public GraphWindow() {
+		super("Graph Window");
 		mxGraph graph = new mxGraph();
 		Object defaultParent = graph.getDefaultParent();
 		graph.getModel().beginUpdate();
@@ -38,7 +38,7 @@ public class JGraphXLearning1 extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		JGraphXLearning1 frame = new JGraphXLearning1();
+		GraphWindow frame = new GraphWindow();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 320);
 		frame.setVisible(true);

@@ -1,5 +1,8 @@
 package br.edu.ifes.tpa.trotski.app;
 
+import javax.swing.JFrame;
+
+import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
 import br.edu.ifes.tpa.trotski.dominio.SistemaTransicao;
 
 public class App {
@@ -16,6 +19,8 @@ public class App {
 
 		SistemaTransicao sistema = new SistemaTransicao(matrizAtivacao,
 				matrizDesativacao);
+
+		MatrizTransicao matriz = sistema.getMatrizTransicao();
 
 		// Informações sobre o Sistema de Transição.
 
@@ -47,6 +52,12 @@ public class App {
 
 		// TODO Determinar se é possível para um par de estados (x,y), se é
 		// possível alcançar y partindo de x.
+
+		// Exibe a janela para a visualização do grafo.
+		GraphWindow frame = new GraphWindow(matriz);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(500, 500);
+		frame.setVisible(true);
 	}
 
 }

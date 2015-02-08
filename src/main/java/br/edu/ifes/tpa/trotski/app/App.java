@@ -56,7 +56,7 @@ public class App {
 		// Exibe a janela para a visualização do grafo.
 		GraphWindow frame = new GraphWindow(matriz);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 500);
+		frame.setSize(600, 600);
 		frame.setVisible(true);
 	}
 

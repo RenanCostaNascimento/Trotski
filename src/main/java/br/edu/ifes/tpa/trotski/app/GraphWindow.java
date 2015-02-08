@@ -11,6 +11,7 @@ import br.edu.ifes.tpa.trotski.dominio.Estado;
 import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
 
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 
 /**
@@ -67,18 +68,21 @@ public class GraphWindow extends JFrame {
 		Object defaultParent = graph.getDefaultParent();
 		graph.getModel().beginUpdate();
 
+		// Permite loops na grafo
+		graph.setAllowLoops(true);
+
 		// Mapa entre os estados e suas representações nas janelas
 		Map<Estado, Object> map = new HashMap<>();
 
 		// Exibe os estados na janela, organizados em um quadrado
-		int width = 400;
-		int height = 400;
+		int width = 450;
+		int height = 450;
 		Set<Estado> estados = matriz.getEstados();
 		double verticesPorEixo = (int) Math.floor(Math.sqrt(estados.size()));
 		double espacamento = width / verticesPorEixo;
 		Iterator<Estado> iterator = estados.iterator();
-		for (double x = 0; x <= width; x = x + espacamento) {
-			for (double y = 0; y <= height; y = y + espacamento) {
+		for (double x = 30; x <= width + 30; x = x + espacamento) {
+			for (double y = 30; y <= height + 30; y = y + espacamento) {
 				if (iterator.hasNext()) {
 					Estado estado = iterator.next();
 					Object vertice = graph.insertVertex(defaultParent, null,

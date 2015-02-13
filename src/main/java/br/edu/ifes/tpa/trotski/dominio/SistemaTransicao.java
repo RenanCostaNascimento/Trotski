@@ -35,6 +35,15 @@ public class SistemaTransicao {
 	public String verificarIrreflexividade() {
 		return matrizTransicao.verificarIrreflexividade();
 	}
+	
+	/**
+	 * Verifica o fecho reflexivo do grafo como um todo, retornando o mesmo.
+	 * 
+	 * @return o fecho transitivo das relações contidas no grafo.
+	 */
+	public String verificarFechoReflexivo() {
+		return matrizTransicao.verificarFechoReflexivo();
+	}
 
 	/**
 	 * Verifica quais transições são simétricas.

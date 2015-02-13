@@ -45,6 +45,8 @@ public class App {
 		System.out.println(sistema.verificarTransitividade());
 		System.out.println("Fecho transitivo do estado FFF:");
 		System.out.println(sistema.verificarFechoTransitivo("FFF"));
+		System.out.println("Fecho reflexivo do grafo:");
+		System.out.println(sistema.verificarFechoReflexivo());
 
 		// TODO Dizer se a relação é de equivalência ou ordem parcial.
 

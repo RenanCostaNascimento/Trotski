@@ -163,6 +163,25 @@ public class MatrizTransicao {
 	}
 
 	/**
+	 * Verifica o fecho reflexivo do grafo como um todo, retornando o mesmo.
+	 * 
+	 * @return o fecho transitivo das relações contidas no grafo.
+	 */
+	public String verificarFechoReflexivo() {
+		StringBuilder builder = new StringBuilder();
+
+		for (Estado estado : estados) {
+			builder.append(estado.toString());
+			if (!verificarReflexividade(estado)) {
+				builder.append(estado.nomeRepresentativoEstado() + " -> "
+						+ estado.nomeRepresentativoEstado() + "\n");
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
 	 * Verifica quais transições são simétricas.
 	 * 
 	 * @return as transições que são simétricas.
@@ -348,7 +367,7 @@ public class MatrizTransicao {
 					if (Estado
 							.configuracoesIguais(estadoDaLista, proximoEstado)) {
 						fila.add(estadoDaLista);
-						//fila.add(proximoEstado);
+						// fila.add(proximoEstado);
 						break;
 					}
 				}

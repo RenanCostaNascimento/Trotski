@@ -43,8 +43,8 @@ public class App {
 		System.out.println(sistema.verificarAssimetria());
 		System.out.println("Relações Transitivas:");
 		System.out.println(sistema.verificarTransitividade());
-		System.out.println("Fecho transitivo do estado FTT:");
-		System.out.println(sistema.verificarFechoTransitivo("FTT"));
+		System.out.println("Fecho transitivo do estado FFF:");
+		System.out.println(sistema.verificarFechoTransitivo("FFF"));
 
 		// TODO Dizer se a relação é de equivalência ou ordem parcial.
 

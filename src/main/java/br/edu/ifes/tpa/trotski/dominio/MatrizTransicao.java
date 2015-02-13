@@ -340,7 +340,18 @@ public class MatrizTransicao {
 		while (iterator.hasNext()) {
 			Estado proximoEstado = iterator.next();
 			if (adicionarEstado(estadosVisitados, proximoEstado)) {
-				fila.add(proximoEstado);
+				for (Estado estadoDaLista : estados) {
+					// foi necessário fazer essa verificação e adicionar o
+					// estados diretamente da lista de estados, uma vez que, por
+					// algum motivo, quando adicionávamos proximoEstado seus
+					// próximos estados viam vazios.
+					if (Estado
+							.configuracoesIguais(estadoDaLista, proximoEstado)) {
+						fila.add(estadoDaLista);
+						//fila.add(proximoEstado);
+						break;
+					}
+				}
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public class Estado {
 
 		for (Estado estado : proximosEstados) {
 			builder.append(this.nomeRepresentativoEstado() + " -> ");
-			builder.append(estado.nomeRepresentativoEstado() + ", \n");
+			builder.append(estado.nomeRepresentativoEstado() + "\n");
 		}
 
 		return builder.toString();
@@ -61,9 +61,9 @@ public class Estado {
 		String nome = "";
 		for (int i = 0; i < configuracao.length; i++) {
 			if (this.configuracao[i]) {
-				nome += "t";
+				nome += "T";
 			} else {
-				nome += "f";
+				nome += "F";
 			}
 		}
 		return nome;

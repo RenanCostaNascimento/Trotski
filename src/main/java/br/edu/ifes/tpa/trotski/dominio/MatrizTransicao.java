@@ -1,6 +1,7 @@
 package br.edu.ifes.tpa.trotski.dominio;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -115,7 +116,7 @@ public class MatrizTransicao {
 
 		for (Estado estado : estados) {
 			if (verificarReflexividade(estado)) {
-				builder.append(estado.nomeRepresentativoEstado() + ",\n");
+				builder.append(estado.nomeRepresentativoEstado() + "\n");
 			}
 		}
 
@@ -134,7 +135,7 @@ public class MatrizTransicao {
 
 		for (Estado estado : estados) {
 			if (!verificarReflexividade(estado)) {
-				builder.append(estado.nomeRepresentativoEstado() + ",\n");
+				builder.append(estado.nomeRepresentativoEstado() + "\n");
 			}
 		}
 
@@ -163,7 +164,7 @@ public class MatrizTransicao {
 
 	/**
 	 * Verifica quais transições são simétricas.
-	 *
+	 * 
 	 * @return as transições que são simétricas.
 	 */
 	public String verificarSimetria() {
@@ -190,7 +191,7 @@ public class MatrizTransicao {
 
 	/**
 	 * Verifica quais transições são antissimétricas.
-	 *
+	 * 
 	 * @return as transições que são antissimétricas.
 	 */
 	public String verificarAntissimetria() {
@@ -219,7 +220,7 @@ public class MatrizTransicao {
 
 	/**
 	 * Verifica quais transições são assimétricas.
-	 *
+	 * 
 	 * @return as transições que são assimétricas.
 	 */
 	public String verificarAssimetria() {
@@ -253,10 +254,117 @@ public class MatrizTransicao {
 	}
 
 	/**
+	 * Percorre a matriz de transição, encontrando todas as relações transitivas
+	 * da mesma. Uma relação transitiva é representada por um grafo direcionado
+	 * que, para qualquer sequência de arcos que, saindo de um elemento A,
+	 * chegam a um elemento Z, existe um arco ligando A e Z diretamente.
+	 * 
+	 * @return todas as relações de transitividade.
+	 */
+	public String verificarTransitividade() {
+		StringBuilder builder = new StringBuilder();
+
+		for (Estado estado : estados) {
+			for (Estado proximoEstado : estado.getProximosEstados()) {
+				if (!Estado.configuracoesIguais(estado, proximoEstado)
+						&& verificarAdjacenciaDirecionada(estado, proximoEstado)) {
+					builder.append(estado.nomeRepresentativoEstado() + " -> "
+							+ proximoEstado.nomeRepresentativoEstado() + "\n");
+				}
+			}
+
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Verifica se o estado1 possui uma aresta para estado2 diretamente.
+	 * 
+	 * @param estado1
+	 *            o estado de onde a aresta parte.
+	 * @param estado2
+	 *            o estado em que a aresta chega.
+	 * @return true se existe ligação direta de estado1 para estado2.
+	 */
+	private boolean verificarAdjacenciaDirecionada(Estado estado1,
+			Estado estado2) {
+
+		return Estado.estadoExiste(estado1.getProximosEstados(), estado2);
+
+	}
+
+	/**
+	 * Verifica o fecho transitivo de um estado. O fecho transitivo direto (ftd)
+	 * de um vértice v é o conjunto de todos os vértices que podem ser atingidos
+	 * por algum caminho iniciando em v.
+	 * 
+	 * @param estado
+	 *            o estado do qual ser quer saber o fecho transitivo.
+	 * @return uma string contendo o nome de todos os estados que fazer parte do
+	 *         fecho transitivo.
+	 */
+	public String verificarFechoTransitivo(Estado estado) {
+
+		StringBuilder builder = new StringBuilder();
+		Set<String> estadosVisitados = new HashSet<>();
+		Queue<Estado> fila = new LinkedList<>();
+		fila.add(estado);
+
+		while (!fila.isEmpty()) {
+			verificarFechoTransitivo(fila.remove(), estadosVisitados, fila);
+		}
+
+		for (String nomeEstado : estadosVisitados) {
+			builder.append(nomeEstado + "\n");
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Verifica o fecho transitivo de um estado, adicionando os estados que
+	 * fazer parte do mesmo em um set.
+	 * 
+	 * @param estado
+	 *            o estado que se deseja saber o fecho transitivo.
+	 * @param estadosVisitados
+	 *            o set contendo os estados do fecho transitivo.
+	 * @param fila
+	 */
+	private void verificarFechoTransitivo(Estado estado,
+			Set<String> estadosVisitados, Queue<Estado> fila) {
+
+		Iterator<Estado> iterator = estado.getProximosEstados().iterator();
+
+		while (iterator.hasNext()) {
+			Estado proximoEstado = iterator.next();
+			if (adicionarEstado(estadosVisitados, proximoEstado)) {
+				fila.add(proximoEstado);
+			}
+		}
+	}
+
+	/**
+	 * Adiciona um estado em um set de estados.
+	 * 
+	 * @param setEstados
+	 *            o set de estado em que o estado será inserido.
+	 * @param estado
+	 *            o estado que se deseja inserir.
+	 * @return true se o estado foi adicionado.
+	 */
+	private boolean adicionarEstado(Set<String> setEstados, Estado estado) {
+
+		return setEstados.add(estado.nomeRepresentativoEstado());
+
+	}
+
+	/**
 	 * Gera uma conjunto de transições. Onde cada transição é um vetor com
 	 * apenas dois estados, e indica que há uma transição do primeiro estado
 	 * para o segundo.
-	 *
+	 * 
 	 * @return conjunto de transições.
 	 */
 	private Set<Estado[]> obterTransicoes() {

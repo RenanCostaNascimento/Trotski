@@ -72,7 +72,7 @@ public class GraphWindow extends JFrame {
 		graph.setAllowLoops(true);
 
 		// Mapa entre os estados e suas representações nas janelas
-		Map<Estado, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 
 		// Exibe os estados na janela, organizados em um quadrado
 		int width = 450;
@@ -88,7 +88,7 @@ public class GraphWindow extends JFrame {
 					Object vertice = graph.insertVertex(defaultParent, null,
 							estado.nomeRepresentativoEstado(), x, y, 80, 20);
 					// Mapeia o estado a sua representação
-					map.put(estado, vertice);
+					map.put(estado.nomeRepresentativoEstado(), vertice);
 				}
 			}
 		}
@@ -96,9 +96,11 @@ public class GraphWindow extends JFrame {
 		// Cria as arestas na grafo visual
 		Set<Estado[]> transicoes = matriz.getTransicoes();
 		for (Estado[] transicao : transicoes) {
-			Object v1 = map.get(transicao[0]);
-			Object v2 = map.get(transicao[1]);
+			Object v1 = map.get(transicao[0].nomeRepresentativoEstado());
+			Object v2 = map.get(transicao[1].nomeRepresentativoEstado());
+
 			graph.insertEdge(defaultParent, null, null, v1, v2);
+
 		}
 
 		// Finalização a criação da grafo e adiciona a grafo ao JFrame

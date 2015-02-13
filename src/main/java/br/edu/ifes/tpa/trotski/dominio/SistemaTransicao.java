@@ -36,16 +36,62 @@ public class SistemaTransicao {
 		return matrizTransicao.verificarIrreflexividade();
 	}
 
+	/**
+	 * Verifica quais transições são simétricas.
+	 * 
+	 * @return as transições que são simétricas.
+	 */
 	public String verificarSimetria() {
 		return matrizTransicao.verificarSimetria();
 	}
 
+	/**
+	 * Verifica quais transições são antissimétricas.
+	 * 
+	 * @return as transições que são antissimétricas.
+	 */
 	public String verificarAntissimetria() {
 		return matrizTransicao.verificarAntissimetria();
 	}
 
+	/**
+	 * Verifica quais transições são assimétricas.
+	 * 
+	 * @return as transições que são assimétricas.
+	 */
 	public String verificarAssimetria() {
 		return matrizTransicao.verificarAssimetria();
+	}
+
+	/**
+	 * Percorre a matriz de transição, encontrando todas as relações transitivas
+	 * da mesma. Uma relação de transitividade é dada por e1 -> e2 -> e3.
+	 * 
+	 * @return todas as relações de transitividade.
+	 */
+	public String verificarTransitividade() {
+		return matrizTransicao.verificarTransitividade();
+	}
+
+	/**
+	 * Verifica o fecho transitivo de um estado. O fecho transitivo direto (ftd)
+	 * de um vértice v é o conjunto de todos os vértices que podem ser atingidos
+	 * por algum caminho iniciando em v.
+	 * 
+	 * @param estado
+	 *            o estado do qual ser quer saber o fecho transitivo.
+	 * @return uma string contendo o nome de todos os estados que fazer parte do
+	 *         fecho transitivo.
+	 */
+	public String verificarFechoTransitivo(String nomeEstado) {
+
+		for (Estado estado : matrizTransicao.getEstados()) {
+			if (estado.nomeRepresentativoEstado().equals(nomeEstado)) {
+				return matrizTransicao.verificarFechoTransitivo(estado);
+			}
+		}
+
+		return "Estado ausente do grafo.";
 	}
 
 	/**

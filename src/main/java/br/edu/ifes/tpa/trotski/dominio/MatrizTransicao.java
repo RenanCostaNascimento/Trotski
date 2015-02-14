@@ -90,15 +90,15 @@ public class MatrizTransicao {
 			// verifica se o estado existe no grafo
 			if (!Estado.estadoExiste(estados, novoEstado)) {
 				// cria uma nova aresta para o novo estado e o adiciona no grafo
-				estado.addProximoEstado(novoEstado);
 				estados.add(novoEstado);
-				filaEstados.add(novoEstado);
+				estado.addProximoEstado(getEstado(novoEstado));
+				filaEstados.add(getEstado(novoEstado));
 			} else {
 				// verifica se já existe uma aresta para o novo estado
 				if (!Estado.estadoExiste(estado.getProximosEstados(),
 						novoEstado)) {
 					// só cria uma nova aresta para o novo estado
-					estado.addProximoEstado(novoEstado);
+					estado.addProximoEstado(getEstado(novoEstado));
 				}
 			}
 		}
@@ -187,25 +187,53 @@ public class MatrizTransicao {
 	 * @return as transições que são simétricas.
 	 */
 	public String verificarSimetria() {
-		List<Estado[]> transicoesSimetricas = new LinkedList<Estado[]>();
+		StringBuilder builder = new StringBuilder();
 
-		// Encontra as transições simétricas.
-		for (Estado[] transicao : transicoes) {
-			for (Estado[] outraTransicao : transicoes) {
-				if (transicao[0] == outraTransicao[1]
-						&& transicao[1] == outraTransicao[0])
-					transicoesSimetricas.add(transicao);
+		for (Estado estado : estados) {
+			for (Estado proximoEstado : estado.getProximosEstados()) {
+
+				if (verificarSimetria(estado, proximoEstado)) {
+					builder.append(estado.nomeRepresentativoEstado() + " <-> "
+							+ proximoEstado.nomeRepresentativoEstado() + "\n");
+				}
 			}
 		}
 
-		// Forma a string
-		StringBuilder builder = new StringBuilder();
-		for (Estado[] transicao : transicoesSimetricas) {
-			builder.append(transicao[0].nomeRepresentativoEstado() + "->"
-					+ transicao[1].nomeRepresentativoEstado() + "\n");
+		return builder.toString();
+	}
+
+	/**
+	 * Verifica se há simetria entre dois estados.
+	 * 
+	 * @param estado1
+	 *            um dos estados que se quer saber a simetria.
+	 * @param estado2
+	 *            outro estado que se quer saber a simetria.
+	 * @return true se os estados formarem uma relação de simetria.
+	 */
+	private boolean verificarSimetria(Estado estado1, Estado estado2) {
+
+		boolean estado1ArcoEstado2 = false;
+		boolean estado2ArcoEstado1 = false;
+
+		for (Estado proximoEstado1 : estado1.getProximosEstados()) {
+			if (Estado.configuracoesIguais(proximoEstado1, estado2)) {
+				estado1ArcoEstado2 = true;
+				break;
+			}
+		}
+		for (Estado proximoEstado2 : estado2.getProximosEstados()) {
+			if (Estado.configuracoesIguais(proximoEstado2, estado1)) {
+				estado2ArcoEstado1 = true;
+				break;
+			}
 		}
 
-		return builder.toString();
+		if (estado1ArcoEstado2 && estado2ArcoEstado1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -359,18 +387,7 @@ public class MatrizTransicao {
 		while (iterator.hasNext()) {
 			Estado proximoEstado = iterator.next();
 			if (adicionarEstado(estadosVisitados, proximoEstado)) {
-				for (Estado estadoDaLista : estados) {
-					// foi necessário fazer essa verificação e adicionar o
-					// estados diretamente da lista de estados, uma vez que, por
-					// algum motivo, quando adicionávamos proximoEstado seus
-					// próximos estados viam vazios.
-					if (Estado
-							.configuracoesIguais(estadoDaLista, proximoEstado)) {
-						fila.add(estadoDaLista);
-						// fila.add(proximoEstado);
-						break;
-					}
-				}
+				fila.add(proximoEstado);
 			}
 		}
 	}
@@ -426,5 +443,17 @@ public class MatrizTransicao {
 		}
 
 		return builder.toString();
+	}
+
+	private Estado getEstado(Estado configuracao) {
+
+		for (Estado estado : estados) {
+			if (Estado.configuracoesIguais(estado, configuracao)) {
+				return estado;
+			}
+		}
+
+		return null;
+
 	}
 }

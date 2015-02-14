@@ -35,7 +35,7 @@ public class SistemaTransicao {
 	public String verificarIrreflexividade() {
 		return matrizTransicao.verificarIrreflexividade();
 	}
-	
+
 	/**
 	 * Verifica o fecho reflexivo do grafo como um todo, retornando o mesmo.
 	 * 
@@ -101,6 +101,32 @@ public class SistemaTransicao {
 		}
 
 		return "Estado ausente do grafo.";
+	}
+
+	/**
+	 * Verifica se há relação de equivalência entre 2 estados.
+	 * 
+	 * @param estado1
+	 *            o primeiro estado.
+	 * @param estado2
+	 *            o segundo estado.
+	 * @return true se houve relação de equivalência.
+	 */
+	public boolean verificarEquivalencia(String configuracaoEstado1,
+			String configuracaoEstado2) {
+
+		Estado estado1 = null, estado2 = null;
+
+		for (Estado estado : matrizTransicao.getEstados()) {
+			if (estado.nomeRepresentativoEstado().equals(configuracaoEstado1)) {
+				estado1 = estado;
+			}
+			if (estado.nomeRepresentativoEstado().equals(configuracaoEstado2)) {
+				estado2 = estado;
+			}
+		}
+		
+		return matrizTransicao.verificarEquivalencia(estado1, estado2);
 	}
 
 	/**

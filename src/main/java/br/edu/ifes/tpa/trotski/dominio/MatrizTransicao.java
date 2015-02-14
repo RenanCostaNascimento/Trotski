@@ -408,6 +408,25 @@ public class MatrizTransicao {
 	}
 
 	/**
+	 * Verifica se há relação de equivalência entre 2 estados.
+	 * 
+	 * @param estado1
+	 *            o primeiro estado.
+	 * @param estado2
+	 *            o segundo estado.
+	 * @return true se houve relação de equivalência.
+	 */
+	public boolean verificarEquivalencia(Estado estado1, Estado estado2) {
+
+		if (verificarReflexividade(estado1) && verificarReflexividade(estado2)
+				&& verificarSimetria(estado1, estado2)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Gera uma conjunto de transições. Onde cada transição é um vetor com
 	 * apenas dois estados, e indica que há uma transição do primeiro estado
 	 * para o segundo.
@@ -444,7 +463,7 @@ public class MatrizTransicao {
 
 		return builder.toString();
 	}
-
+	
 	private Estado getEstado(Estado configuracao) {
 
 		for (Estado estado : estados) {

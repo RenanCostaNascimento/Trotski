@@ -182,7 +182,9 @@ public class MatrizTransicao {
 	}
 
 	/**
-	 * Verifica quais transições são simétricas.
+	 * Verifica quais transições são simétricas. Os vertices x e y tem uma
+	 * transição simétrica se há uma relação de x para y e de y para x. Sendo
+	 * que x e y podem ser iguais.
 	 * 
 	 * @return as transições que são simétricas.
 	 */
@@ -237,7 +239,10 @@ public class MatrizTransicao {
 	}
 
 	/**
-	 * Verifica quais transições são antissimétricas.
+	 * Verifica quais transições são antissimétricas. Os vertices x e y tem uma
+	 * transição anti-simétrica se há uma relação de x para y, porém não há uma
+	 * relação de y para x. Entretando, x e y podem ser iguais. Isto é, relações
+	 * reflexivas são permitidas.
 	 * 
 	 * @return as transições que são antissimétricas.
 	 */
@@ -247,7 +252,8 @@ public class MatrizTransicao {
 		for (Estado estado : estados) {
 			for (Estado proximoEstado : estado.getProximosEstados()) {
 
-				if (!verificarSimetria(estado, proximoEstado) || Estado.configuracoesIguais(estado, proximoEstado)) {
+				if (!verificarSimetria(estado, proximoEstado)
+						|| Estado.configuracoesIguais(estado, proximoEstado)) {
 					builder.append(estado.nomeRepresentativoEstado() + " -> "
 							+ proximoEstado.nomeRepresentativoEstado() + "\n");
 				}
@@ -258,7 +264,10 @@ public class MatrizTransicao {
 	}
 
 	/**
-	 * Verifica quais transições são assimétricas.
+	 * Verifica quais transições são assimétricas. Os vertices x e y tem uma
+	 * transição assimetrica se há uma relação de x para y, porém não há uma
+	 * relação de y para x. Mesmo que x e y sejam iguais. Isto é, relações
+	 * reflexivas NÃO são permitidas.
 	 * 
 	 * @return as transições que são assimétricas.
 	 */
@@ -441,7 +450,7 @@ public class MatrizTransicao {
 
 		return builder.toString();
 	}
-	
+
 	private Estado getEstado(Estado configuracao) {
 
 		for (Estado estado : estados) {

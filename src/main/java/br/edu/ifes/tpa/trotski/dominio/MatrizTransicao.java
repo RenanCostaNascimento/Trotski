@@ -242,24 +242,16 @@ public class MatrizTransicao {
 	 * @return as transições que são antissimétricas.
 	 */
 	public String verificarAntissimetria() {
-		// Copia todas as transições
-		List<Estado[]> transicoesAntissimetricas = new LinkedList<Estado[]>(
-				transicoes);
-
-		// Filtra quais transições são antissimétricas
-		for (Estado[] transicao : transicoes) {
-			for (Estado[] outraTransicao : transicoes) {
-				if (transicao[0] == outraTransicao[1]
-						&& transicao[1] == outraTransicao[0])
-					transicoesAntissimetricas.remove(transicao);
-			}
-		}
-
-		// Forma a string
 		StringBuilder builder = new StringBuilder();
-		for (Estado[] transicao : transicoesAntissimetricas) {
-			builder.append(transicao[0].nomeRepresentativoEstado() + " -> "
-					+ transicao[1].nomeRepresentativoEstado() + "\n");
+
+		for (Estado estado : estados) {
+			for (Estado proximoEstado : estado.getProximosEstados()) {
+
+				if (!verificarSimetria(estado, proximoEstado) || Estado.configuracoesIguais(estado, proximoEstado)) {
+					builder.append(estado.nomeRepresentativoEstado() + " -> "
+							+ proximoEstado.nomeRepresentativoEstado() + "\n");
+				}
+			}
 		}
 
 		return builder.toString();
@@ -271,30 +263,16 @@ public class MatrizTransicao {
 	 * @return as transições que são assimétricas.
 	 */
 	public String verificarAssimetria() {
-		// Copia todas as transições
-		List<Estado[]> transicoesAssimetricas = new LinkedList<Estado[]>(
-				transicoes);
+		StringBuilder builder = new StringBuilder();
 
-		// Filtra quais transições são assimétricas
-		for (Estado[] transicao : transicoes) {
-			for (Estado[] outraTransicao : transicoes) {
-				// Remove se for reflexiva
-				if (Estado.configuracoesIguais(transicao[0], transicao[1])) {
-					transicoesAssimetricas.remove(transicao);
-				}
-				// Remove se for simétrica
-				if (transicao[0] == outraTransicao[1]
-						&& transicao[1] == outraTransicao[0]) {
-					transicoesAssimetricas.remove(transicao);
+		for (Estado estado : estados) {
+			for (Estado proximoEstado : estado.getProximosEstados()) {
+
+				if (!verificarSimetria(estado, proximoEstado)) {
+					builder.append(estado.nomeRepresentativoEstado() + " -> "
+							+ proximoEstado.nomeRepresentativoEstado() + "\n");
 				}
 			}
-		}
-
-		// Forma a string
-		StringBuilder builder = new StringBuilder();
-		for (Estado[] transicao : transicoesAssimetricas) {
-			builder.append(transicao[0].nomeRepresentativoEstado() + " -> "
-					+ transicao[1].nomeRepresentativoEstado() + "\n");
 		}
 
 		return builder.toString();

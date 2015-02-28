@@ -405,6 +405,10 @@ public class MatrizTransicao {
 	 */
 	public boolean verificarEquivalencia(Estado estado1, Estado estado2) {
 
+		// Não é necessário verificar a transitividade entre os estados, pois se
+		// a verificação de simetria for obedecida, então a verificação de
+		// transitividade também será obedecida, uma vez que existe uma ligação
+		// direta entre os dois estados.
 		if (verificarReflexividade(estado1) && verificarReflexividade(estado2)
 				&& verificarSimetria(estado1, estado2)) {
 			return true;

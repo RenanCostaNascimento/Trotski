@@ -125,8 +125,14 @@ public class SistemaTransicao {
 				estado2 = estado;
 			}
 		}
-		
+
 		return matrizTransicao.verificarEquivalencia(estado1, estado2);
+	}
+
+	public boolean verificarCaminho(String configuracao1, String configuracao2) {
+		Estado x = matrizTransicao.getEstado(configuracao1);
+		Estado y = matrizTransicao.getEstado(configuracao2);
+		return matrizTransicao.verificarCaminho(x, y);
 	}
 
 	/**

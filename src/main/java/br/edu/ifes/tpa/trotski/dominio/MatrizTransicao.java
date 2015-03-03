@@ -418,6 +418,43 @@ public class MatrizTransicao {
 	}
 
 	/**
+	 * Usa o algoritmo de busca em largura para verificar se é possível chegar
+	 * em y a partir de x.
+	 * 
+	 * @param x
+	 *            Estado de partida.
+	 * @param y
+	 *            Estado a se chegar.
+	 * @return true, se for possível chegar em y a partir de x.
+	 */
+	public boolean verificarCaminho(Estado x, Estado y) {
+		Queue<Estado> q = new LinkedList<>();
+		List<Estado> descobertos = new LinkedList<Estado>();
+
+		Estado v = x;
+
+		q.add(v);
+		descobertos.add(v);
+
+		while (q.size() > 0) {
+			v = q.poll();
+			for (Estado w : v.getProximosEstados()) {
+				// Verifica se o destino foi alcançado
+				if (Estado.configuracoesIguais(w, y)) {
+					return true;
+				}
+
+				if (!descobertos.contains(w)) {
+					q.add(w);
+					descobertos.add(w);
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Gera uma conjunto de transições. Onde cada transição é um vetor com
 	 * apenas dois estados, e indica que há uma transição do primeiro estado
 	 * para o segundo.
@@ -455,7 +492,34 @@ public class MatrizTransicao {
 		return builder.toString();
 	}
 
-	private Estado getEstado(Estado configuracao) {
+	/**
+	 * Procura dentro da matriz o estado que tenha a configuração igual a
+	 * indicada e o retorna.
+	 * 
+	 * @param representacao
+	 *            A representacao do estado desejado.
+	 * @return O estado desejado.
+	 */
+	public Estado getEstado(String representacao) {
+
+		for (Estado estado : estados) {
+			if (representacao.equals(estado.nomeRepresentativoEstado())) {
+				return estado;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Busca por um estado que tenha uma configuração igual a do estado
+	 * indicado.
+	 * 
+	 * @param configuracao
+	 *            Estado com a configuração a qual deseja-se buscar.
+	 * @return Estado encontrado.
+	 */
+	public Estado getEstado(Estado configuracao) {
 
 		for (Estado estado : estados) {
 			if (Estado.configuracoesIguais(estado, configuracao)) {
@@ -464,6 +528,5 @@ public class MatrizTransicao {
 		}
 
 		return null;
-
 	}
 }

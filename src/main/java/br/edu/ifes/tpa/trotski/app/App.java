@@ -58,10 +58,14 @@ public class App {
 		// relação, caso ela não seja reflexiva, simétrica e transitiva,
 		// respectivamente.
 
-		// TODO O sistema é capaz de retornar ao estado inicial?
+		// Verifica se o sistema é capaz de retornar ao estado inicial.
+		System.out.println("Verificando se o sistema pode retornar ao estado inicial (FFF):");
+		System.out.println(sistema.verificarCaminho("FFF", "FFF"));
 
-		// TODO Determinar se é possível para um par de estados (x,y), se é
+		// Determinar se é possível para um par de estados (x,y), se é
 		// possível alcançar y partindo de x.
+		System.out.println("Verificando caminho de FFF para TTT:");
+		System.out.println(sistema.verificarCaminho("FFF", "TTT"));
 
 		// Exibe a janela para a visualização do grafo.
 		GraphWindow frame = new GraphWindow(matriz);

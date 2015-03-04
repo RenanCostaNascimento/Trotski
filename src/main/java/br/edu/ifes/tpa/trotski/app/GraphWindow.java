@@ -11,7 +11,6 @@ import br.edu.ifes.tpa.trotski.dominio.Estado;
 import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
 
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 
 /**

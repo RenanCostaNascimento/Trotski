@@ -165,7 +165,7 @@ public class MatrizTransicao {
 	/**
 	 * Verifica o fecho reflexivo do grafo como um todo, retornando o mesmo.
 	 * 
-	 * @return o fecho transitivo das relações contidas no grafo.
+	 * @return o fecho reflexivo das relações contidas no grafo.
 	 */
 	public String verificarFechoReflexivo() {
 		StringBuilder builder = new StringBuilder();
@@ -174,6 +174,27 @@ public class MatrizTransicao {
 			builder.append(estado.toString());
 			if (!verificarReflexividade(estado)) {
 				builder.append(estado.nomeRepresentativoEstado() + " -> "
+						+ estado.nomeRepresentativoEstado() + "\n");
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Verifica o fecho simétrico do grafo como um todo. Retornando assim,
+	 * quais transições são necessárias para que o grafo seja simétrico.
+	 * 
+	 * @return o fecho simétrico das relações contidas no grafo.
+	 */
+	public String verificarFechoSimetrico() {
+		StringBuilder builder = new StringBuilder();
+
+		for (Estado estado : estados) {
+		    for (Estado proximo : estado.getProximosEstados())
+			// Se não for simétrico, acrescentamos a transição necessária ao fecho
+			if (!verificarSimetria(estado, proximo)) {
+				builder.append(proximo.nomeRepresentativoEstado() + " -> "
 						+ estado.nomeRepresentativoEstado() + "\n");
 			}
 		}

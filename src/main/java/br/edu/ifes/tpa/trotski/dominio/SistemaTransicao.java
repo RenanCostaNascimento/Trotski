@@ -45,6 +45,10 @@ public class SistemaTransicao {
 		return matrizTransicao.verificarFechoReflexivo();
 	}
 
+	public String verificarFechoSimetrico() {
+		return matrizTransicao.verificarFechoSimetrico();
+	}
+
 	/**
 	 * Verifica quais transições são simétricas.
 	 * 

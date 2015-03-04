@@ -42,7 +42,7 @@ public class App {
 		System.out.println("Relações Transitivas:");
 		System.out.println(sistema.verificarTransitividade());
 
-		// TODO Dizer se a relação é de equivalência ou ordem parcial.
+		// Diz se a relação é de equivalência ou ordem parcial.
 		System.out.println("Verificando equivalência entre estado FFF e TFF:");
 		System.out.println(sistema.verificarEquivalencia("FFF", "TFF") + "\n");
 		System.out.println("Verificando equivalência entre estado TTT e TTF:");
@@ -52,13 +52,15 @@ public class App {
 		System.out.println("Verificando ordem parcial entre estado TTT e TTF:");
 		System.out.println(sistema.verificarOrdemParcial("TTT", "TTF") + "\n");
 
-		// TODO Apresentar os fechos reflexivo, simétrico e transitivo da
+		// Apresenta os fechos reflexivo, simétrico e transitivo da
 		// relação, caso ela não seja reflexiva, simétrica e transitiva,
 		// respectivamente.
 		System.out.println("Fecho transitivo do estado FFF:");
 		System.out.println(sistema.verificarFechoTransitivo("FFF"));
 		System.out.println("Fecho reflexivo do grafo:");
 		System.out.println(sistema.verificarFechoReflexivo());
+		System.out.println("Fecho simétrico do grafo:");
+		System.out.println(sistema.verificarFechoSimetrico());
 
 		// Verifica se o sistema é capaz de retornar ao estado inicial.
 		System.out

@@ -22,15 +22,13 @@ public class App {
 
 		MatrizTransicao matriz = sistema.getMatrizTransicao();
 
-		// Informações sobre o Sistema de Transição.
-
-		// TODO Indicar se as seguintes propriedades são válidas ou não para a
-		// relação de transição: reflexiva; írreflexiva; simétrica;
-		// anti-simétrica; assimétrica; e transitiva.
-		// Se não for, você deve apresentar todos os pares ordenados de estados
-		// presentes ou ausentes que não satisfazem a propriedade.
+		// Apresenta todas as relações da grafo
 		System.out.println("Todas as Relações:");
 		System.out.println(sistema.toString());
+
+		// Indica se as seguintes propriedades são válidas ou não para a
+		// relação de transição: reflexiva; írreflexiva; simétrica;
+		// anti-simétrica; assimétrica; e transitiva.
 		System.out.println("Relações reflexivas:");
 		System.out.println(sistema.verificarReflexividade());
 		System.out.println("Relações não reflexivas:");
@@ -43,23 +41,24 @@ public class App {
 		System.out.println(sistema.verificarAssimetria());
 		System.out.println("Relações Transitivas:");
 		System.out.println(sistema.verificarTransitividade());
-		System.out.println("Fecho transitivo do estado FFF:");
-		System.out.println(sistema.verificarFechoTransitivo("FFF"));
-		System.out.println("Fecho reflexivo do grafo:");
-		System.out.println(sistema.verificarFechoReflexivo());
-		System.out.println("Verificando equivalência entre estado FFF e TFF:");
-		System.out.println(sistema.verificarEquivalencia("FFF", "TFF") +"\n");
-		System.out.println("Verificando equivalência entre estado TTT e TTF:");
-		System.out.println(sistema.verificarEquivalencia("TTT", "TTF") +"\n");
 
 		// TODO Dizer se a relação é de equivalência ou ordem parcial.
+		System.out.println("Verificando equivalência entre estado FFF e TFF:");
+		System.out.println(sistema.verificarEquivalencia("FFF", "TFF") + "\n");
+		System.out.println("Verificando equivalência entre estado TTT e TTF:");
+		System.out.println(sistema.verificarEquivalencia("TTT", "TTF") + "\n");
 
 		// TODO Apresentar os fechos reflexivo, simétrico e transitivo da
 		// relação, caso ela não seja reflexiva, simétrica e transitiva,
 		// respectivamente.
+		System.out.println("Fecho transitivo do estado FFF:");
+		System.out.println(sistema.verificarFechoTransitivo("FFF"));
+		System.out.println("Fecho reflexivo do grafo:");
+		System.out.println(sistema.verificarFechoReflexivo());
 
 		// Verifica se o sistema é capaz de retornar ao estado inicial.
-		System.out.println("Verificando se o sistema pode retornar ao estado inicial (FFF):");
+		System.out
+				.println("Verificando se o sistema pode retornar ao estado inicial (FFF):");
 		System.out.println(sistema.verificarCaminho("FFF", "FFF"));
 
 		// Determinar se é possível para um par de estados (x,y), se é

@@ -47,6 +47,10 @@ public class App {
 		System.out.println(sistema.verificarEquivalencia("FFF", "TFF") + "\n");
 		System.out.println("Verificando equivalência entre estado TTT e TTF:");
 		System.out.println(sistema.verificarEquivalencia("TTT", "TTF") + "\n");
+		System.out.println("Verificando ordem parcial entre estado FFF e TFF:");
+		System.out.println(sistema.verificarOrdemParcial("FFF", "TFF") + "\n");
+		System.out.println("Verificando ordem parcial entre estado TTT e TTF:");
+		System.out.println(sistema.verificarOrdemParcial("TTT", "TTF") + "\n");
 
 		// TODO Apresentar os fechos reflexivo, simétrico e transitivo da
 		// relação, caso ela não seja reflexiva, simétrica e transitiva,

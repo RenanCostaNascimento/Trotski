@@ -239,6 +239,18 @@ public class MatrizTransicao {
 	}
 
 	/**
+	 * Verifica se há uma relação de anti-simetria entre os estados.
+	 * 
+	 * @param estado1
+	 * @param estado2
+	 * @return true se os estados formarem uma relação anti-simétrica.
+	 */
+	private boolean verificarAntissimetria(Estado estado1, Estado estado2) {
+		return !verificarSimetria(estado1, estado2)
+				|| Estado.configuracoesIguais(estado1, estado2);
+	}
+
+	/**
 	 * Verifica quais transições são antissimétricas. Os vertices x e y tem uma
 	 * transição anti-simétrica se há uma relação de x para y, porém não há uma
 	 * relação de y para x. Entretando, x e y podem ser iguais. Isto é, relações
@@ -252,8 +264,7 @@ public class MatrizTransicao {
 		for (Estado estado : estados) {
 			for (Estado proximoEstado : estado.getProximosEstados()) {
 
-				if (!verificarSimetria(estado, proximoEstado)
-						|| Estado.configuracoesIguais(estado, proximoEstado)) {
+				if (verificarAntissimetria(estado, proximoEstado)) {
 					builder.append(estado.nomeRepresentativoEstado() + " -> "
 							+ proximoEstado.nomeRepresentativoEstado() + "\n");
 				}
@@ -411,6 +422,30 @@ public class MatrizTransicao {
 		// direta entre os dois estados.
 		if (verificarReflexividade(estado1) && verificarReflexividade(estado2)
 				&& verificarSimetria(estado1, estado2)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Uma relação é de ordem parcial se e somente se ela for reflexiva
+	 * anti-simétrica e transitiva.
+	 * 
+	 * @param estado1
+	 *            o primeiro estado da relação.
+	 * @param estado2
+	 *            o segundo estado da relação.
+	 * @return true se a relação for de ordem parcial.
+	 */
+	public boolean verificarOrdemParcial(Estado estado1, Estado estado2) {
+
+		// Não é necessário verificar a transitividade entre os estados, pois se
+		// a verificação de anti-simetria for obedecida, então a verificação de
+		// transitividade também será obedecida, uma vez que existe uma ligação
+		// direta entre os dois estados.
+		if (verificarReflexividade(estado1) && verificarReflexividade(estado2)
+				&& verificarAntissimetria(estado1, estado2)) {
 			return true;
 		}
 

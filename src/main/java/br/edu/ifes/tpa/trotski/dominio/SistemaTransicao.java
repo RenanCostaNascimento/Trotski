@@ -129,9 +129,19 @@ public class SistemaTransicao {
 		return matrizTransicao.verificarEquivalencia(estado1, estado2);
 	}
 
+	public boolean verificarOrdemParcial(String configuracao1,
+			String configuracao2) {
+
+		Estado estado1 = matrizTransicao.getEstado(configuracao1);
+		Estado estado2 = matrizTransicao.getEstado(configuracao2);
+
+		return matrizTransicao.verificarOrdemParcial(estado1, estado2);
+	}
+
 	public boolean verificarCaminho(String configuracao1, String configuracao2) {
 		Estado x = matrizTransicao.getEstado(configuracao1);
 		Estado y = matrizTransicao.getEstado(configuracao2);
+
 		return matrizTransicao.verificarCaminho(x, y);
 	}
 

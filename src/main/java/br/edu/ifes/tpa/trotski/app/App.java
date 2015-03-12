@@ -1,15 +1,13 @@
 package br.edu.ifes.tpa.trotski.app;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
+
+import org.json.JSONException;
 
 import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
 import br.edu.ifes.tpa.trotski.dominio.SistemaTransicao;
@@ -27,27 +25,24 @@ public class App {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		// Pega o conteúdo JSON do arquivo de entrada.
-		List<String> lines = Files.readAllLines(Paths.get(arquivoEntrada),
-				StandardCharsets.UTF_8);
-		StringBuilder sb = new StringBuilder();
-		for (String line : lines) {
-			sb.append(line + "\n");
+		// Pega os dados do arquivo
+		String json = JSONConverter.lerArquivo(arquivoEntrada);
+
+		// Inicializa um sistema de transição, usando o json lido do arquivo.
+		SistemaTransicao sistema = null;
+		try {
+			sistema = JSONConverter.JSONtoSistemaTransicao(json);
+		} catch (JSONException e) {
+			System.err
+					.println("Não foi possível interpretar o arquivo de entrada.");
+			System.err.println("Talvez ele não tenha sido bem construído.");
+			System.exit(1);
 		}
-		String json = sb.toString();
-		System.out.println(json);
-		JSONConverter.lerJSON(json);
 
-		boolean[][] matrizAtivacao = { { false, false, false },
-				{ true, false, false }, { true, false, false } };
-		boolean[][] matrizDesativacao = { { true, true, false },
-				{ false, true, false }, { true, false, true } };
-
-		SistemaTransicao sistema = new SistemaTransicao(matrizAtivacao,
-				matrizDesativacao);
-
+		// Pega a matriz de transição do sistema.
 		MatrizTransicao matriz = sistema.getMatrizTransicao();
 
+		// Loop principal para a exibição do menu.
 		while (true) {
 			// Exibe o menu e pede uma opção ao usuário.
 			exibirMenu();
@@ -190,6 +185,9 @@ public class App {
 		}
 	}
 
+	/**
+	 * Exibe o menu principal da aplicação.
+	 */
 	private static void exibirMenu() {
 		System.out.println("Trotski");
 		System.out.println("=======");
@@ -251,6 +249,10 @@ public class App {
 		return entrada;
 	}
 
+	/**
+	 * Faz a execução esperar uma resposta do usuário. Quando ele pressionar
+	 * enter, a execução irá continuar.
+	 */
 	public static void holdOn() {
 		System.out.print("\nPressione enter para continuar...");
 		try {

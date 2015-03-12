@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import br.edu.ifes.tpa.trotski.dominio.SistemaTransicao;
 
-public class JSONConverter {
+public class Util {
 
 	/**
 	 * Lê todas as linhas de um arquivo e retorna tudo como uma String só.

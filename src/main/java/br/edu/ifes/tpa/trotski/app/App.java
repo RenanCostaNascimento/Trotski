@@ -11,7 +11,7 @@ import org.json.JSONException;
 
 import br.edu.ifes.tpa.trotski.dominio.MatrizTransicao;
 import br.edu.ifes.tpa.trotski.dominio.SistemaTransicao;
-import br.edu.ifes.tpa.trotski.util.JSONConverter;
+import br.edu.ifes.tpa.trotski.util.Util;
 
 public class App {
 
@@ -26,12 +26,12 @@ public class App {
 	public static void main(String[] args) throws IOException {
 
 		// Pega os dados do arquivo
-		String json = JSONConverter.lerArquivo(arquivoEntrada);
+		String json = Util.lerArquivo(arquivoEntrada);
 
 		// Inicializa um sistema de transição, usando o json lido do arquivo.
 		SistemaTransicao sistema = null;
 		try {
-			sistema = JSONConverter.JSONtoSistemaTransicao(json);
+			sistema = Util.JSONtoSistemaTransicao(json);
 		} catch (JSONException e) {
 			System.err
 					.println("Não foi possível interpretar o arquivo de entrada.");

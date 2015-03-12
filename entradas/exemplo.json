@@ -1,5 +1,4 @@
 {
-	"numeroAcoes": 3,
 	"matrizAtivacao":[
 		[ false, false, false ],
 		[ true, false, false ],

@@ -1,0 +1,12 @@
+{
+	"matrizAtivacao": [
+		[ false, true, false ],
+		[ false, false, false ],
+		[ false, true, false ]
+	],
+	"matrizDesativacao": [
+		[ true, false, false ],
+		[ true, true, false ],
+		[ true, false, true ]
+	]
+}
